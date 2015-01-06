@@ -9,14 +9,4 @@
   .row
     .col-md-12
       %table.table.table-condensed.table-hover.table-listing#rqs-listing
-        %tr
-          %th
-          %th time
-          %th ip
-          %th UA
-          %th method
-          %th url
-          %th comment
-          %th
-        -@rqs.each do |rq|
-          =render partial: 'request_line', locals: { rq: rq }
+        =render 'rqs_listing'

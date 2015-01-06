@@ -6,7 +6,7 @@ class HelloController < ApplicationController
   end
 
   def newtrap
-    @trap = Trap.create(trap_name: params[:trap_name])
+    @trap = Trap.create(trap_params)
     redirect_to trap_list_path(@trap)
   end
 
@@ -24,7 +24,6 @@ class HelloController < ApplicationController
         url: request.original_url,
         headers: request.env.select{|k,v| k =~ /^HTTP|^CONTENT|^SERVER|^REMOTE|^REQUEST/ },
         body: request.body.read.to_s.force_encoding("utf-8"),
-        cookie: request.env['rack.request.cookie_string'],
         scheme: request.env['rack.url_scheme']
       }
     )
@@ -53,8 +52,9 @@ class HelloController < ApplicationController
     @rq = Rq.find(params[:id])
     @trap = @rq.trap
     @rq.destroy
+    @rqs = @trap.rqs.order('created_at DESC')
     respond_to do |format|
-      format.html { redirect_to trap_list_path(@trap), notice: 'Rq was successfully destroyed.' }
+      format.html { render '_rqs_listing', layout: false, notice: 'Rq was successfully destroyed.' }
       format.json { render json: @trap.rqs }
     end
   end
@@ -63,5 +63,10 @@ class HelloController < ApplicationController
     @trap = Trap.find(params[:id])
     @trap.destroy
     redirect_to root_url
+  end
+
+  private
+  def trap_params
+    params.require(:trap).permit(:trap_name, :comment)
   end
 end

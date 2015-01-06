@@ -9,7 +9,7 @@
   %td= rq.rq['url'] if rq.rq
   %td= rq.comment
   %td.text-danger
-    =link_to delete_rq_path(rq), :method => :delete, remote: true do
+    =link_to delete_rq_path(rq), :method => :delete, data: { rq_id: rq.id }, class: 'delete-rq', remote: true do
       .glyphicon.glyphicon-remove
 %tr.hidden{ id: "rq-raw-#{rq.id}"}
   %td{ colspan: 8 }= rq.rq

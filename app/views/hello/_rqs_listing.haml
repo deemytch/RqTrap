@@ -1,0 +1,11 @@
+%tr
+  %th
+  %th time
+  %th ip
+  %th UA
+  %th method
+  %th url
+  %th comment
+  %th
+-@rqs.each do |rq|
+  =render partial: 'request_line', locals: { rq: rq }

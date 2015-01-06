@@ -3,7 +3,7 @@
     .col-md-12.center-block
       =form_for @trap, :method => :put, html: {:role => :form, :class => 'form-horizontal'} do |form|
         .form-group
-          = form.label :name, 'Name for the trap', class: 'col-md-2 control-label'
+          = form.label :trap_name, 'Name for the trap', class: 'col-md-2 control-label'
           .col-md-9
             =form.text_field :trap_name, placeholder: 'trap name', class: 'form-control'
         .form-group
