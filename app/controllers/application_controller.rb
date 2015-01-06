@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   def is_trap?
     controller_name == 'hello' && action_name == 'trap'
   end
+
 end

@@ -27,7 +27,6 @@ class HelloController < ApplicationController
         scheme: request.env['rack.url_scheme']
       }
     )
-#    request.env.keys.each{|k| logger.debug "#{k}: #{request.env[k]}" }
     render text: "Ok. Got it."
   end
 
@@ -40,6 +39,12 @@ class HelloController < ApplicationController
       fmt.html { }
       fmt.json { render json: @rqs }
     end
+  end
+
+  def rqs_list
+    @trap = Trap.find(params[:id])
+    @rqs = @trap.rqs.order('created_at DESC')
+    render '_rqs_listing', layout: false
   end
 
   def trap_oneline

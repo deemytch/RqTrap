@@ -4,7 +4,6 @@ $(document).ready(function(){
     $('#rq-raw-' + rq_id).toggleClass('hidden');
     });
   $('#rqs-listing').on('ajax:success', '.delete-rq', function(e,data,status,xhr){
-    var rq_id = $(this).data('rq-id');
     $('#rqs-listing').html(data);
   });
 });

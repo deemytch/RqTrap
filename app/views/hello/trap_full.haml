@@ -10,3 +10,15 @@
     .col-md-12
       %table.table.table-condensed.table-hover.table-listing#rqs-listing
         =render 'rqs_listing'
+
+:javascript
+  $(document).ready(function(){
+    setInterval(function(){
+      $.ajax({
+        url: "#{rqs_list_path(@trap)}",
+        method: 'GET'
+      }).done(function(data){
+        $('#rqs-listing').html(data);
+      });
+    }, 3000);
+  });
