@@ -6,15 +6,24 @@
     .col-md-12
       %table.table.table-condensed.table-hover.table-listing
         %tr
+          %th
           %th time
           %th ip
           %th UA
           %th method
           %th url
+          %th comment
+          %th
         -@rqs.each do |rq|
           %tr
+            %td
+              .glyphicon.glyphicon-plus
+              .glyphicon.glyphicon-edit
             %td= rq.created_at.strftime('%d/%m %H:%M:%S')
             %td= rq.ip
             %td= rq.user_agent
             %td= rq.method
             %td= rq.rq['url'] if rq.rq
+            %td= rq.comment
+            %td.text-danger
+              .glyphicon.glyphicon-remove

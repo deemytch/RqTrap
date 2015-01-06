@@ -21,11 +21,13 @@ class HelloController < ApplicationController
       method: request.method,
       rq: {
         url: request.original_url,
-        he: request.env.select{|k,v| k =~ /^HTTP/ },
-        bo: request.body.to_s.force_encoding("utf-8")
+        he: request.env.select{|k,v| k =~ /^HTTP|^CONTENT|^SERVER|^REMOTE|^REQUEST/ },
+        bo: request.body.to_s.force_encoding("utf-8"),
+        cookie: request.env['rack.request.cookie_string'],
+        scheme: request.env['rack.url_scheme']
       }
     )
-    logger.debug "request.body is '#{request.inspect}'"
+#    request.env.keys.each{|k| logger.debug "#{k}: #{request.env[k]}" }
     render text: "Ok. Got it."
   end
 
