@@ -36,6 +36,10 @@ class HelloController < ApplicationController
       redirect_to root_path
     end
     @rqs = @trap.rqs.order('created_at DESC')
+    respond_to do |fmt|
+      fmt.html { }
+      fmt.json { render json: @rqs }
+    end
   end
 
   def trap_oneline
@@ -44,4 +48,13 @@ class HelloController < ApplicationController
     end
   end
 
+  def delete_rq
+    @rq = Rq.find(params[:id])
+    @trap = @rq.trap
+    @rq.destroy
+    respond_to do |format|
+      format.html { redirect_to trap_list_path(@trap), notice: 'Rq was successfully destroyed.' }
+      format.json { render json: @trap.rqs }
+    end
+  end
 end

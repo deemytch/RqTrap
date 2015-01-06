@@ -6,5 +6,8 @@ Rails.application.routes.draw do
   get '/:id/requests', to: 'hello#trap_full', :as => :trap_list
   get '/request/:id', to: 'hello#trap_oneline', :as => :single_request
 
+  delete '/request/:id', to: 'hello#delete_rq', :as => :delete_rq
+  delete '/trap/:id', to: 'hello#delete_trap', :as => :delete_trap
+
   root to: 'hello#home'
 end
