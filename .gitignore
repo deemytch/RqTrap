@@ -5,4 +5,4 @@
 /vendor
 *~
 /public/system
-/config/database.yml*
+/config/database.yml.backup

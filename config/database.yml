@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: rqtrap_dev
+  username: rqtrap
+
+test:
+  <<: *default
+  database: rqtrap_test
+  username: rqtrap
+
+production:
+  <<: *default
+  host: <%= ENV['rqtrap-host'] %>
+  database: <%= ENV['rqtrap-db'] %>
+  username: <%= ENV['rqtrap-user'] %>
+  password: <%= ENV['rqtrap-dbpass'] %>
