@@ -1,0 +1,24 @@
+.container
+  .row
+    .col-md-12.center-block
+      =form_tag save_trap_path, :method => :put, :role => :form, :class => 'form-horizontal' do
+        .form-group
+          = label :trap_name, 'Name for the trap', class: 'col-sm-2 control-label'
+          .col-md-8
+            =text_field_tag :trap_name, SecureRandom.hex(32), placeholder: 'trap name', class: 'form-control'
+          .col-md-1
+            %button.btn.btn-success{ type: 'submit' }
+              %span.glyphicon.glyphicon-ok
+  .row
+    .col-md-12
+      %table.table.table-condensed.table-hover
+        %tr
+          %th trap address
+          %th comments
+          %th requests count
+        -@traps.each do |trap|
+          %tr
+            %td
+              =link_to full_trap_name(trap), trap_list_path(trap)
+            %td=trap.comment
+            %td=trap.rqs.count
