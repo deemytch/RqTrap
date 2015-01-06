@@ -2,6 +2,7 @@ class HelloController < ApplicationController
 #TODO user auth needed in the next round
   def home #one big button
     @traps = Trap.all.order('created_at DESC')
+    @trap = Trap.new(trap_name: SecureRandom.hex(32))
   end
 
   def newtrap
@@ -21,8 +22,8 @@ class HelloController < ApplicationController
       method: request.method,
       rq: {
         url: request.original_url,
-        he: request.env.select{|k,v| k =~ /^HTTP|^CONTENT|^SERVER|^REMOTE|^REQUEST/ },
-        bo: request.body.to_s.force_encoding("utf-8"),
+        headers: request.env.select{|k,v| k =~ /^HTTP|^CONTENT|^SERVER|^REMOTE|^REQUEST/ },
+        body: request.body.read.to_s.force_encoding("utf-8"),
         cookie: request.env['rack.request.cookie_string'],
         scheme: request.env['rack.url_scheme']
       }
@@ -56,5 +57,11 @@ class HelloController < ApplicationController
       format.html { redirect_to trap_list_path(@trap), notice: 'Rq was successfully destroyed.' }
       format.json { render json: @trap.rqs }
     end
+  end
+
+  def delete_trap
+    @trap = Trap.find(params[:id])
+    @trap.destroy
+    redirect_to root_url
   end
 end

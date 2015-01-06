@@ -1,11 +1,15 @@
 .container
   .row
     .col-md-12.center-block
-      =form_tag save_trap_path, :method => :put, :role => :form, :class => 'form-horizontal' do
+      =form_for @trap, :method => :put, html: {:role => :form, :class => 'form-horizontal'} do |form|
         .form-group
-          = label :trap_name, 'Name for the trap', class: 'col-sm-2 control-label'
+          = form.label :name, 'Name for the trap', class: 'col-md-2 control-label'
+          .col-md-9
+            =form.text_field :trap_name, placeholder: 'trap name', class: 'form-control'
+        .form-group
+          = form.label :comment, 'Comment', class: 'col-md-2 control-label'
           .col-md-8
-            =text_field_tag :trap_name, SecureRandom.hex(32), placeholder: 'trap name', class: 'form-control'
+            =form.text_field :comment, placeholder: 'trap comment', class: 'form-control'
           .col-md-1
             %button.btn.btn-success{ type: 'submit' }
               %span.glyphicon.glyphicon-ok
@@ -16,9 +20,13 @@
           %th trap address
           %th comments
           %th requests count
+          %th
         -@traps.each do |trap|
           %tr
             %td
               =link_to full_trap_name(trap), trap_list_path(trap)
             %td=trap.comment
             %td=trap.rqs.count
+            %td
+              =link_to trap, :method => :delete do
+                .glyphicon.glyphicon-remove

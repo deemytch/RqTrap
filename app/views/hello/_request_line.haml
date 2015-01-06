@@ -1,7 +1,7 @@
 %tr
   %td
-    .glyphicon.glyphicon-plus
-    .glyphicon.glyphicon-edit
+    =link_to '#', data: { rq_id: rq.id }, class: 'show-raw-rq-btn', id: "rq_#{rq.id}" do
+      .glyphicon.glyphicon-plus
   %td= rq.created_at.strftime('%d/%m %H:%M:%S')
   %td= rq.ip
   %td= rq.user_agent
@@ -11,3 +11,5 @@
   %td.text-danger
     =link_to delete_rq_path(rq), :method => :delete, remote: true do
       .glyphicon.glyphicon-remove
+%tr.hidden{ id: "rq-raw-#{rq.id}"}
+  %td{ colspan: 8 }= rq.rq

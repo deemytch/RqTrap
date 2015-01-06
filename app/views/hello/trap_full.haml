@@ -1,6 +1,10 @@
 .container
   .row
-    .col-md-12
+    .col-md-1
+      %h4
+        =link_to root_path do
+          .glyphicon.glyphicon-home
+    .col-md-11
       %h4= full_trap_name(@trap)
   .row
     .col-md-12
