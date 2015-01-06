@@ -11,5 +11,9 @@
   %td.text-danger
     =link_to delete_rq_path(rq), :method => :delete, data: { rq_id: rq.id }, class: 'delete-rq', remote: true do
       .glyphicon.glyphicon-remove
-%tr.hidden{ id: "rq-raw-#{rq.id}"}
-  %td{ colspan: 8 }= rq.rq
+-if @unwrapped.include?(rq.id)
+  %tr.rq-raw-data{ id: "rq-raw-#{rq.id}", data: { rq_id: "#{rq.id}" } }
+    %td{ colspan: 8 }= rq.rq
+-else
+  %tr.hidden.rq-raw-data{ id: "rq-raw-#{rq.id}", data: { rq_id: "#{rq.id}" } }
+    %td{ colspan: 8 }= rq.rq

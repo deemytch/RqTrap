@@ -35,6 +35,7 @@ class HelloController < ApplicationController
       redirect_to root_path
     end
     @rqs = @trap.rqs.order('created_at DESC')
+    @unwrapped = params[:unwrapped] ? params[:unwrapped].split(',').collect{|i| i.to_i } : []
     respond_to do |fmt|
       fmt.html { }
       fmt.json { render json: @rqs }
@@ -44,6 +45,7 @@ class HelloController < ApplicationController
   def rqs_list
     @trap = Trap.find(params[:id])
     @rqs = @trap.rqs.order('created_at DESC')
+    @unwrapped = params[:unwrapped] ? params[:unwrapped].split(',').collect{|i| i.to_i } : []
     render '_rqs_listing', layout: false
   end
 

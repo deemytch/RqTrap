@@ -12,10 +12,13 @@
         =render 'rqs_listing'
 
 :javascript
+  var rq_raw = [];
   $(document).ready(function(){
     setInterval(function(){
+      rq_raw = [];
+      $('.rq-raw-data:not(.hidden)').each(function(){ rq_raw.push($(this).data('rq-id')) });
       $.ajax({
-        url: "#{rqs_list_path(@trap)}",
+        url: "#{rqs_list_path(@trap)}?unwrapped=" + rq_raw.toString(),
         method: 'GET'
       }).done(function(data){
         $('#rqs-listing').html(data);
