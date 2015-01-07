@@ -13,21 +13,22 @@ class HelloController < ApplicationController
   def trap #got incoming request and wrote it to db
     unless @trap = Trap.find_by(trap_name: params[:trap_name])
       render nothing: true, status: 503
+    else
+      @rq = Rq.create(
+        trap: @trap,
+        raw_query: request.inspect,
+        ip: request.remote_ip,
+        user_agent: request.env["HTTP_USER_AGENT"],
+        method: request.method,
+        rq: {
+          url: request.original_url,
+          headers: request.env.select{|k,v| k =~ /^HTTP|^CONTENT|^SERVER|^REMOTE|^REQUEST/ },
+          body: request.body.read.to_s.force_encoding("utf-8"),
+          scheme: request.env['rack.url_scheme']
+        }
+      )
+      render text: "Ok. Got it."
     end
-    @rq = Rq.create(
-      trap: @trap,
-      raw_query: request.inspect,
-      ip: request.remote_ip,
-      user_agent: request.env["HTTP_USER_AGENT"],
-      method: request.method,
-      rq: {
-        url: request.original_url,
-        headers: request.env.select{|k,v| k =~ /^HTTP|^CONTENT|^SERVER|^REMOTE|^REQUEST/ },
-        body: request.body.read.to_s.force_encoding("utf-8"),
-        scheme: request.env['rack.url_scheme']
-      }
-    )
-    render text: "Ok. Got it."
   end
 
   def trap_full #show all requests for one trap ordered by time
