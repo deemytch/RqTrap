@@ -1,5 +1,8 @@
 .container
   .row
+    .col-md-12
+      =render 'flashes'
+  .row
     .col-md-12.center-block
       =form_for @trap, :method => :put, html: {:role => :form, :class => 'form-horizontal'} do |form|
         .form-group

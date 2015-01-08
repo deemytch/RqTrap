@@ -6,8 +6,14 @@ class HelloController < ApplicationController
   end
 
   def newtrap
-    @trap = Trap.create(trap_params)
-    redirect_to trap_list_path(@trap)
+    @trap = Trap.new(trap_params)
+    if @trap.save
+      flash[:success] = "The trap '#{@trap.trap_name}' is ok."
+      redirect_to trap_list_path(@trap)
+    else
+      flash[:danger] = "The trap '#{@trap.trap_name}' is already there."
+      redirect_to root_path
+    end
   end
 
   def trap #got incoming request and wrote it to db

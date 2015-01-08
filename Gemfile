@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+ruby '2.2.0' # this is for heroku
+
 gem 'rails', '4.2.0'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
@@ -30,4 +32,3 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 gem 'rails_12factor'
-ruby '2.2.0'
