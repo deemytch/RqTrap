@@ -42,3 +42,4 @@ Rails.application.configure do
   # config.preload_frameworks = true
   # config.allow_concurrency = true
 end
+

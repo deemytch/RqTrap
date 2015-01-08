@@ -4,7 +4,7 @@
     %title Request Trapper
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    = javascript_include_tag 'http://localhost:9292/fafa/client.js'
+    = javascript_include_tag "#{ENV['WHERE_MY_FAYE']}/fafa/client.js"
     = csrf_meta_tags
   %body
     = yield
