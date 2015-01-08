@@ -1,4 +1,7 @@
 class HelloController < ApplicationController
+  include ActionController::Live
+  # after_action :send_rqs_list, only: [:trap, :delete_rq]
+
 #TODO user auth needed in the next round
   def home #one big button
     @traps = Trap.all.order('created_at DESC')
@@ -27,7 +30,12 @@ class HelloController < ApplicationController
           scheme: request.env['rack.url_scheme']
         }
       )
+
+      client = Faye::Client.new('http://localhost:9292/fafa')
+      EM.run{ client.publish("/#{@trap.id}", :cmd => :insert, html: render_to_string('_request_line', layout: false)) }
+
       render text: "Ok. Got it."
+    end
     end
   end
 
@@ -43,28 +51,21 @@ class HelloController < ApplicationController
     end
   end
 
-  def rqs_list
-    @trap = Trap.find(params[:id])
-    @rqs = @trap.rqs.order('created_at DESC')
-    @unwrapped = params[:unwrapped] ? params[:unwrapped].split(',').collect{|i| i.to_i } : []
-    render '_rqs_listing', layout: false
-  end
-
   def trap_oneline
     unless @rq = Rq.find(params[:id])
       redirect_to root_path
     end
+    render '_request_line', layout: false
   end
 
   def delete_rq
     @rq = Rq.find(params[:id])
     @trap = @rq.trap
-    @rq.destroy
-    @rqs = @trap.rqs.order('created_at DESC')
-    respond_to do |format|
-      format.html { render '_rqs_listing', layout: false, notice: 'Rq was successfully destroyed.' }
-      format.json { render json: @trap.rqs }
+    if @rq.destroy
+      client = Faye::Client.new('http://localhost:9292/fafa')
+      EM.run{ client.publish("/#{@trap.id}", :cmd => :delete, rqid: params[:id]) }
     end
+    render nothing: true
   end
 
   def delete_trap

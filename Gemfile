@@ -29,5 +29,7 @@ gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
-gem 'rails_12factor'
+# gem 'rails_12factor'
 ruby '2.2.0'
+
+gem 'faye'

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   match '/:trap_name', to: 'hello#trap', :via => :all
   get '/:id/requests', to: 'hello#trap_full', :as => :trap_list
-  get '/:id/rqs', to: 'hello#rqs_list', :as => :rqs_list
+  get '/trap-updates/:id', to: 'hello#stream_updates' # SSE
 
   get '/request/:id', to: 'hello#trap_oneline', :as => :single_request
 
