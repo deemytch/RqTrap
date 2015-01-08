@@ -36,7 +36,6 @@ class HelloController < ApplicationController
 
       render text: "Ok. Got it."
     end
-    end
   end
 
   def trap_full #show all requests for one trap ordered by time
