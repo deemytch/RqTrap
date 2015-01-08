@@ -13,15 +13,20 @@
 
 :javascript
   var rq_raw = [];
+  var faclient = '';
+  var fasubscr = '';
   $(document).ready(function(){
-    setInterval(function(){
-      rq_raw = [];
-      $('.rq-raw-data:not(.hidden)').each(function(){ rq_raw.push($(this).data('rq-id')) });
-      $.ajax({
-        url: "#{rqs_list_path(@trap)}?unwrapped=" + rq_raw.toString(),
-        method: 'GET'
-      }).done(function(data){
-        $('#rqs-listing').html(data);
-      });
-    }, 3000);
+    faclient = new Faye.Client('http://localhost:9292/fafa');
+    fasubscr = faclient.subscribe("/#{@trap.id}", function(msg) {
+      switch(msg['cmd']){
+        case 'insert':
+          $('#rqs-listing-header').after(msg['html']);
+          break;
+        case 'delete':
+          $('#rq-id-'+msg['rqid']).remove();
+          $('#rq-raw-id-'+msg['rqid']).remove();
+          console.log('delete #' + msg['rqid']);
+          break;
+      }
+    });
   });

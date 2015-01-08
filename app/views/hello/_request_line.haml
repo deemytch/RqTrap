@@ -1,4 +1,6 @@
-%tr
+-# for one-line render message
+- rq ||= @rq
+%tr{ id: "rq-id-#{rq.id}" }
   %td
     =link_to '#', data: { rq_id: rq.id }, class: 'show-raw-rq-btn', id: "rq_#{rq.id}" do
       .glyphicon.glyphicon-plus
@@ -11,9 +13,5 @@
   %td.text-danger
     =link_to delete_rq_path(rq), :method => :delete, data: { rq_id: rq.id }, class: 'delete-rq', remote: true do
       .glyphicon.glyphicon-remove
--if @unwrapped.include?(rq.id)
-  %tr.rq-raw-data{ id: "rq-raw-#{rq.id}", data: { rq_id: "#{rq.id}" } }
-    %td{ colspan: 8 }= rq.rq
--else
-  %tr.hidden.rq-raw-data{ id: "rq-raw-#{rq.id}", data: { rq_id: "#{rq.id}" } }
-    %td{ colspan: 8 }= rq.rq
+%tr.hidden.rq-raw-data{ id: "rq-raw-id-#{rq.id}", data: { rq_id: "#{rq.id}" } }
+  %td{ colspan: 8 }= rq.rq

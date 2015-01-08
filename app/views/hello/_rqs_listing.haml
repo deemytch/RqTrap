@@ -1,11 +1,11 @@
-%tr
-  %th
-  %th time
-  %th ip
-  %th UA
-  %th method
+%tr#rqs-listing-header
+  %th{ style: 'width: 21px; '}
+  %th{ style: 'width: 100px; '} time
+  %th{ style: 'width: 80px; '} ip
+  %th{ style: 'width: 160px; '} UA
+  %th{ style: 'width: 50px; '} method
   %th url
-  %th comment
-  %th
+  %th{ style: 'width: 100px; '} comment
+  %th{ style: 'width: 21px; '}
 -@rqs.each do |rq|
   =render partial: 'request_line', locals: { rq: rq }
