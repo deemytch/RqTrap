@@ -23,9 +23,8 @@
           $('#rqs-listing-header').after(msg['html']);
           break;
         case 'delete':
-          $('#rq-id-'+msg['rqid']).remove();
-          $('#rq-raw-id-'+msg['rqid']).remove();
-          console.log('delete #' + msg['rqid']);
+          $('tr#rq-id-'+msg['rqid']).remove();
+          $('tr#rq-raw-id-'+msg['rqid']).remove();
           break;
       }
     });
